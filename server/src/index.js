@@ -1,9 +1,10 @@
 import express from 'express';
-import http from'http';
+import http from 'http';
 import { Server } from 'socket.io';
 import cors from'cors';
 
 import sequelize from './database/db.connection.js';
+import { commentRouter } from './routes/router.js';
 
 const app = express();
 app.use(cors());
@@ -15,7 +16,8 @@ const socketServer = new Server(server, {
     }
 });
 
+commentRouter(socketServer);
 
-server.listen(process.env.PORT || 8080, () => {
-    console.log(`Streaming service is running on http://localhost:${process.env.PORT || 8080}`);
+server.listen(8080, () => {
+    console.log(`Streaming service is running on http://localhost:${8080}`);
 });
