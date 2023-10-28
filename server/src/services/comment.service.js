@@ -1,11 +1,11 @@
-import Comment from "../models/Comment";
+import Comment from "../models/Comment.js";
 
 export default class CommentService {
 
     async selectAll() {
         try {
-            const allComments = await Comment.findAll();
-            console.log(allComments);
+            const comments = await Comment.findAll();
+            return comments;
         } catch (error) {
             console.error('Error selecting comment:', error);
         }
@@ -19,7 +19,7 @@ export default class CommentService {
                 },
             });
         
-            console.log(comments);
+            return comments;
         } catch (error) {
             console.error('Error selecting comment:', error);
         }
@@ -34,7 +34,7 @@ export default class CommentService {
                     },
                 },
             });
-            console.log(comments);
+            return comments;
         } catch (error) {
             console.error('Error selecting comment:', error);
         }
@@ -44,7 +44,7 @@ export default class CommentService {
         try {
             const comment = await Comment.findByPk(id);
             if (comment) {
-                console.log(comment);
+                return comments;
             } else {
                 console.log('A comment with the specified ID was not found.');
             }
@@ -60,7 +60,7 @@ export default class CommentService {
                     head_id: id,
                 },
             });
-            console.log(comments);
+            return comments;
         } catch (error) {
             console.error('Error selecting comment:', error);
         }
@@ -76,7 +76,7 @@ export default class CommentService {
               head_id: data.head_id
             });
         
-            console.log('New comment created:', newComment);
+            return newComment;
           } catch (error) {
             console.error('Error creating comment:', error);
           }
@@ -91,7 +91,7 @@ export default class CommentService {
             });
         
             if (updatedRowCount > 0) {
-              console.log(`Updated ${updatedRowCount} comments with ID ${id}`);
+                return `Updated ${updatedRowCount} comments with ID ${id}`;
             } else {
               console.log(`Comment with ID ${id} not found.`);
             }
@@ -108,7 +108,7 @@ export default class CommentService {
                 },
         });
         if (deletedRowCount > 0) {
-            console.log(`Deleted ${deletedRowCount} comments with ID ${id}`);
+            return `Deleted ${deletedRowCount} comments with ID ${id}`;
         } else {
             console.log(`Comment with ID ${id} not found or already deleted.`);
         }
