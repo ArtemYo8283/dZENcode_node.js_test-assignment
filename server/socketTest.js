@@ -8,6 +8,6 @@ socket.on('connect', () => {
   socket.emit('selectAll', { message: 'Hello from the client!' });
 });
 
-socket.on('res-select', (data) => {
+socket.on('res-selectAll', (data) => {
   console.log('Received data from server:', data);
 });
