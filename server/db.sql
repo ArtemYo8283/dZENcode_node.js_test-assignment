@@ -26,17 +26,17 @@ DROP TABLE IF EXISTS `comments`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comments` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(100) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
   `email` varchar(200) NOT NULL,
   `home_page` varchar(500) DEFAULT NULL,
   `text` varchar(5000) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
   `head_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK0_comments_idx` (`head_id`),
   CONSTRAINT `FK0_comments` FOREIGN KEY (`head_id`) REFERENCES `comments` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `comments_BEFORE_INSERT` BEFORE INSERT ON `comments` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
+	SET NEW.createdAt = NOW();
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -74,7 +74,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `comments_BEFORE_UPDATE` BEFORE UPDATE ON `comments` FOR EACH ROW BEGIN
-	SET NEW.updated_at = NOW();
+	SET NEW.updatedAt = NOW();
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -91,4 +91,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-26 17:10:40
+-- Dump completed on 2023-10-29 23:04:11
