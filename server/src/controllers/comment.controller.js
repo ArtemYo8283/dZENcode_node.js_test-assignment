@@ -1,4 +1,5 @@
 import CommentService from "../services/comment.service.js";
+import { idValidator, createValidator, updateValidator } from "../validations/comment.validator.js";
 
 export class CommentController {
     constructor () {
@@ -7,56 +8,81 @@ export class CommentController {
 
     async selectAll(socket, data) {
         const result = await this.service.selectAll();
-        socket.emit('res-selectAll', { status: 200, data: result});
+        socket.emit('res-selectAll', result);
     }
 
     async selectAllHead(socket, data) {
         const result = await this.service.selectAllHead();
-        socket.emit('res-selectAllHead', { status: 200, data: result});
+        socket.emit('res-selectAllHead', result);
     }
     
     async selectAllNested(socket, data) {
         const result = await this.service.selectAllNested();
-        socket.emit('res-selectAllNested', { status: 200, data: result});
+        socket.emit('res-selectAllNested', result);
     }
     
     async selectById(socket, data) {
-        const result = await this.service.selectById(data.id);
-        socket.emit('res-selectById', { status: 200, data: result});
+        const error = await idValidator(data);
+        if (error == null) {
+            const result = await this.service.selectById(data.id);
+            socket.emit('res-selectById', result);
+        } else {
+            socket.emit('res-selectById', error);
+        }
     }
 
     async selectAllNestedByHeadId(socket, data) {
-        const result = await this.service.selectAllNestedByHeadId(data.id);
-        socket.emit('res-selectAllNestedByHeadId', { status: 200, data: result});
+        const error = await idValidator(data);
+        if (error == null) {
+            const result = await this.service.selectAllNestedByHeadId(data.id);
+            socket.emit('res-selectAllNestedByHeadId', result);
+        } else {
+            socket.emit('res-selectAllNestedByHeadId', error);
+        }
     }
     
     async create(socket, data) {
-        const verifiedData = {            
-            user_name: data.user_name,
-            email: data.email,
-            home_page: data.home_page,
-            text: data.text,
-            head_id: data.head_id
-        };
-        const result = await this.service.create(verifiedData);
-        socket.emit('res-create', { status: 200, data: result});
+        const error = await createValidator(data);
+        if (error == null) {
+            const verifiedData = {            
+                user_name: data.user_name,
+                email: data.email,
+                home_page: data.home_page,
+                text: data.text,
+                head_id: data.head_id
+            };
+            const result = await this.service.create(verifiedData);
+            socket.emit('res-create', result);
+        } else {
+            socket.emit('res-create', error);
+        }
     }
 
     async update(socket, data) {
-        const verifiedData = {};
-        const fieldsToExtract = ['id', 'user_name', 'email', 'home_page', 'text', 'head_id'];
-        for (const field of fieldsToExtract) {
-            if (json.hasOwnProperty(field)) {
-                verifiedData[field] = json[field];
+        const error = await updateValidator(data);
+        if (error == null) {
+            const verifiedData = {};
+            const fieldsToExtract = ['id', 'user_name', 'email', 'home_page', 'text', 'head_id'];
+            for (const field of fieldsToExtract) {
+                if (data.hasOwnProperty(field)) {
+                    verifiedData[field] = data[field];
+                }
             }
+            const result = await this.service.update(verifiedData.id, verifiedData);
+            socket.emit('res-update', result);
+        } else {
+            socket.emit('res-update', error);
         }
-        const result = await this.service.update(verifiedData.id, verifiedData);
-        socket.emit('res-update', { status: 200, data: result});
     }
 
     async deleteById(socket, data) {
-        const result = await this.service.deleteById(data.id);
-        socket.emit('res-deleteById', { status: 200, data: result});
+        const error = await idValidator(data);
+        if (error == null) {
+            const result = await this.service.deleteById(data.id);
+            socket.emit('res-deleteById', result);
+        } else {
+            socket.emit('res-deleteById', error);
+        }
     }
 }
 
