@@ -33,10 +33,11 @@ CREATE TABLE `comments` (
   `createdAt` datetime DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
   `head_id` int DEFAULT NULL,
+  `filename` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK0_comments_idx` (`head_id`),
   CONSTRAINT `FK0_comments` FOREIGN KEY (`head_id`) REFERENCES `comments` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +46,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (4,'ArtemYo','artemwot90@gmail.com','https://www.youtube.com/watch?v=qrddha-fWGw','sdAD sad SAD saADA SAd asd AS','2023-10-29 23:26:37','2023-10-29 23:26:37',NULL,'test.txt'),(5,'ArtemYo','artemwot90@gmail.com','https://www.youtube.com/watch?v=qrddha-fWGw','sdAD sad SAD saADA SAd asd AS','2023-10-29 23:27:00','2023-10-29 23:27:00',NULL,'1.jpg');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -91,4 +93,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-29 23:04:11
+-- Dump completed on 2023-10-30  1:59:22
