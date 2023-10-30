@@ -9,6 +9,7 @@ const Comment = sequelize.define('Comment', {
   createdAt : DataTypes.DATE,
   updatedAt: DataTypes.DATE,
   head_id: DataTypes.INTEGER,
+  filename: DataTypes.STRING,
 });
 
 export default Comment;

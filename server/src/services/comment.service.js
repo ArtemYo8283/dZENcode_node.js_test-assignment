@@ -1,4 +1,6 @@
 import Comment from "../models/Comment.js";
+import uploadFile from "../middleware/uploadFile.middleware.js";
+import getFileData from "../middleware/getFileData.middleware.js";
 
 export default class CommentService {
 
@@ -64,17 +66,50 @@ export default class CommentService {
             return { status: 400, message: `Error selecting comment: ${error}` };
         }
     }
-    
+
+    async selectFileById(id) {
+        try {
+            const comment = await Comment.findByPk(id);
+            if (comment) {
+                const result = await getFileData(comment.filename, comment.id);
+                if (result == null) {
+                    return { status: 400, message: `Error while receiving file` };
+                }
+                return { status: 200, data: result};
+            } else {
+                return { status: 400, message: `A comment with the specified ID was not found.` };
+            }
+        } catch (error) {
+            return { status: 400, message: `Error when selecting a comment by ID: ${error}` };
+        }
+    }
+
     async create(data) {
         try {
-            const newComment = await Comment.create({
-                user_name: data.user_name,
-                email: data.email,
-                home_page: data.home_page,
-                text: data.text,
-                head_id: data.head_id
-            });
-            return { status: 200, data: newComment };
+            if(data.fileData){
+                const { filename } = data.fileData;
+                const newComment = await Comment.create({
+                    user_name: data.user_name,
+                    email: data.email,
+                    home_page: data.home_page,
+                    text: data.text,
+                    head_id: data.head_id,
+                    filename: filename
+                });
+                await uploadFile(data.fileData, newComment.id);
+                return { status: 200, data: newComment };
+            }
+            else {
+                const newComment = await Comment.create({
+                    user_name: data.user_name,
+                    email: data.email,
+                    home_page: data.home_page,
+                    text: data.text,
+                    head_id: data.head_id
+                });
+                return { status: 200, data: newComment };
+            }
+
         } catch (error) {
             return { status: 400, message: `Error creating comment: ${error}` };
         }

@@ -24,6 +24,10 @@ export function commentRouter (socketServer) {
             commentController.selectAllNestedByHeadId(socket, data);
         });
 
+        socket.on('selectFileById', (data) => {
+            commentController.selectFileById(socket, data);
+        });
+
         socket.on('create', (data) => {
             commentController.create(socket, data);
         });

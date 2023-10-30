@@ -40,6 +40,16 @@ export class CommentController {
             socket.emit('res-selectAllNestedByHeadId', error);
         }
     }
+
+    async selectFileById(socket, data) {
+        const error = await idValidator(data);
+        if (error == null) {
+            const result = await this.service.selectFileById(data.id);
+            socket.emit('res-selectFileById', result);
+        } else {
+            socket.emit('res-selectFileById', error);
+        }
+    }
     
     async create(socket, data) {
         const error = await createValidator(data);
@@ -49,7 +59,8 @@ export class CommentController {
                 email: data.email,
                 home_page: data.home_page,
                 text: data.text,
-                head_id: data.head_id
+                head_id: data.head_id,
+                fileData: data.fileData
             };
             const result = await this.service.create(verifiedData);
             socket.emit('res-create', result);
