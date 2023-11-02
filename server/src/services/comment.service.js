@@ -1,9 +1,12 @@
+// Import the Comment model
 import Comment from "../models/Comment.js";
+// Import middleware
 import uploadFile from "../middleware/uploadFile.middleware.js";
 import getFileData from "../middleware/getFileData.middleware.js";
 
 export default class CommentService {
 
+    // Function to retrieve all comments
     async selectAll() {
         try {
             const comments = await Comment.findAll();
@@ -13,6 +16,7 @@ export default class CommentService {
         }
     }
 
+    // Function to retrieve all top-level comments (no parent comment)
     async selectAllHead() {
         try {
             const comments = await Comment.findAll({
@@ -26,6 +30,7 @@ export default class CommentService {
         }
     }
     
+     // Function to retrieve all nested comments (with a parent comment)
     async selectAllNested() {
         try {
             const comments = await Comment.findAll({
@@ -41,6 +46,7 @@ export default class CommentService {
         }
     }
     
+    // Function to retrieve a comment by its ID
     async selectById(id) {
         try {
             const comment = await Comment.findByPk(id);
@@ -54,6 +60,7 @@ export default class CommentService {
         }
     }
 
+    // Function to retrieve all nested comments of a specific parent comment
     async selectAllNestedByHeadId(id) {
         try {
             const comments = await Comment.findAll({
@@ -67,6 +74,7 @@ export default class CommentService {
         }
     }
 
+    // Function to retrieve a file associated with a comment by its ID
     async selectFileById(id) {
         try {
             const comment = await Comment.findByPk(id);
@@ -84,8 +92,10 @@ export default class CommentService {
         }
     }
 
+    // Function to create a new comment
     async create(data) {
         try {
+            // Checking if exist field "fileData"
             if(data.fileData){
                 const { filename } = data.fileData;
                 const newComment = await Comment.create({
@@ -115,6 +125,7 @@ export default class CommentService {
         }
     }
 
+    // Function to update an existing comment by its ID
     async update(id, newData){
         try {
             const [updatedRowCount] = await Comment.update(newData, {
@@ -132,6 +143,7 @@ export default class CommentService {
         }
     }
 
+    // Function to delete a comment by its ID
     async deleteById(id) {
         try {
             const deletedRowCount = await Comment.destroy({
