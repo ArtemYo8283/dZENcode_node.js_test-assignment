@@ -3,7 +3,6 @@ import http from 'http';
 import { Server } from 'socket.io';
 import cors from'cors';
 
-import sequelize from './database/db.connection.js';
 import { commentRouter } from './routes/router.js';
 
 const app = express();
