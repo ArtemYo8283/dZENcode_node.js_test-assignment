@@ -1,6 +1,7 @@
 {
-    "host": "localhost",
+    "host": "viaduct.proxy.rlwy.net",
     "user": "root",
-    "password": "root",
+    "port": "58963",
+    "password": "44-defd-D3hh3GGbFG1EGC61ggFcfD-5",
     "database": "dzencode_test_task"
 }

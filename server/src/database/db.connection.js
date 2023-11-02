@@ -8,13 +8,14 @@ const config = JSON.parse(fs.readFileSync('src/database/db-config.json', 'utf8')
 
 // Create a new Sequelize instance with the provided configuration.
 const sequelize = new Sequelize(
-    config.database,
-    config.user,
-    config.password,
-    {
-		host: config.host,
-		dialect: 'mysql'
-    }
+   config.database,
+   config.user,
+   config.password,
+   {
+   host: config.host,
+   port: '58963',
+   dialect: 'mysql'
+   }
 );
 
 // Authenticate the connection to the database.
