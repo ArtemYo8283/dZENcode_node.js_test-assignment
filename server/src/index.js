@@ -11,6 +11,9 @@ import { commentRouter } from './routes/router.js';
 const app = express();
 // Enable CORS to allow cross-origin requests
 app.use(cors());
+app.get('/ping', (req, res) => {
+    res.send('pong');
+  });
 // Create an HTTP server using the Express application
 const server = http.createServer(app);
 
@@ -25,6 +28,6 @@ const socketServer = new Server(server, {
 commentRouter(socketServer);
 
 // Start the server and listen on port 8080
-server.listen(8080, () => {
-    console.log(`Streaming service is running on http://localhost:${8080}`);
+server.listen(process.env.PORT || 8080, () => {
+    console.log(`Streaming service is running on http://localhost:${process.env.PORT ||8080}`);
 });
