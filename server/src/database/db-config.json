@@ -1,7 +1,8 @@
 {
-    "host": "viaduct.proxy.rlwy.net",
+    "host": "monorail.proxy.rlwy.net",
     "user": "root",
-    "port": "58963",
-    "password": "44-defd-D3hh3GGbFG1EGC61ggFcfD-5",
+    "port": "24232",
+    "password": "Gh32C3a4fA1BH--EC3H4BDCbbe6FfbFH",
     "database": "dzencode_test_task"
 }
+
